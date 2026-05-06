@@ -152,34 +152,34 @@ entities:
 
 ### Card Options
 
-| Option                 | Type    | Required | Default  | Description                                                                                                         |
-| ---------------------- | ------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
-| `entities`             | list    | yes      | -        | List of entities or entity config objects                                                                           |
-| `hours`                | number  | yes      | -        | Number of hours of history to fetch                                                                                 |
-| `limit`                | number  | yes      | -        | Max number of events displayed                                                                                      |
-| `visible_events`       | number  | no       | -        | Only show the first N events; hide the rest behind a toggle                                                         |
-| `overflow`             | string  | no       | collapse | `collapse` (Show more/less) or `scroll` (scrollable container)                                                      |
-| `max_height`           | string  | no       | -        | Constrain card height (e.g. `220px`, `16rem`); useful with `overflow: scroll`                                       |
-| `title`                | string  | no       | ""       | Card title                                                                                                          |
-| `relative_time`        | boolean | no       | false    | Use relative ("5 minutes ago") time                                                                                 |
-| `show_date`            | boolean | no       | true     | Include the date in absolute timestamps; set `false` to show time only                                              |
-| `show_names`           | boolean | no       | true     | Show entity names                                                                                                   |
-| `show_states`          | boolean | no       | true     | Show entity states                                                                                                  |
-| `show_icons`           | boolean | no       | true     | Show entity icons                                                                                                   |
-| `language`             | string  | no       | auto     | Language code (default `en-US`; supports `cs`, `en-US`, `en-GB`, `de`, `fr`, `it`, `pl`, `pt-BR`, `ru`, `sv`, etc.) |
-| `refresh_interval`     | number  | no       | -        | Auto-refresh interval in seconds (background refresh)                                                               |
-| `allow_multiline`      | boolean | no       | false    | Enables automatic multiline wrapping for long names/states                                                          |
-| `force_multiline`      | boolean | no       | false    | Always place the state on a new line below the name                                                                 |
-| `card_layout`          | string  | no       | center   | Layout mode: `center` (alternating), `left` (timeline left, cards right), `right` (timeline right, cards left)      |
-| `compact_layout`       | boolean | no       | false    | Overlaps alternating rows to reduce vertical height (only with `card_layout: center`)                               |
-| `card_background`      | string  | no       | -        | Card background color (supports hex/rgb/rgba)                                                                       |
-| `name_color`           | string  | no       | -        | Global name color (overridden by entity)                                                                            |
-| `state_color`          | string  | no       | -        | Global state color (overridden by entity)                                                                           |
-| `timeline_color_start` | string  | no       | -        | Timeline gradient start color (hex/rgb/rgba)                                                                        |
-| `timeline_color_end`   | string  | no       | -        | Timeline gradient end color (hex/rgb/rgba)                                                                          |
-| `dot_color`            | string  | no       | -        | Timeline dot color (hex/rgb/rgba)                                                                                   |
-| `collapse_duplicates`  | boolean | no       | false    | Removes consecutive events with the same state across all entities.                                                 |
-| `collapse_duplicates_keep` | string | no  | `earliest` | Which event to keep when collapsing duplicates: `earliest` (start of the run) or `latest` (end of the run).    |
+| Option                     | Type    | Required | Default    | Description                                                                                                         |
+| -------------------------- | ------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `entities`                 | list    | yes      | -          | List of entities or entity config objects                                                                           |
+| `hours`                    | number  | yes      | -          | Number of hours of history to fetch                                                                                 |
+| `limit`                    | number  | yes      | -          | Max number of events displayed                                                                                      |
+| `visible_events`           | number  | no       | -          | Only show the first N events; hide the rest behind a toggle                                                         |
+| `overflow`                 | string  | no       | collapse   | `collapse` (Show more/less) or `scroll` (scrollable container)                                                      |
+| `max_height`               | string  | no       | -          | Constrain card height (e.g. `220px`, `16rem`); useful with `overflow: scroll`                                       |
+| `title`                    | string  | no       | ""         | Card title                                                                                                          |
+| `relative_time`            | boolean | no       | false      | Use relative ("5 minutes ago") time                                                                                 |
+| `show_date`                | boolean | no       | true       | Include the date in absolute timestamps; set `false` to show time only                                              |
+| `show_names`               | boolean | no       | true       | Show entity names                                                                                                   |
+| `show_states`              | boolean | no       | true       | Show entity states                                                                                                  |
+| `show_icons`               | boolean | no       | true       | Show entity icons                                                                                                   |
+| `language`                 | string  | no       | auto       | Language code (default `en-US`; supports `cs`, `en-US`, `en-GB`, `de`, `fr`, `it`, `pl`, `pt-BR`, `ru`, `sv`, etc.) |
+| `refresh_interval`         | number  | no       | -          | Auto-refresh interval in seconds (background refresh)                                                               |
+| `allow_multiline`          | boolean | no       | false      | Enables automatic multiline wrapping for long names/states                                                          |
+| `force_multiline`          | boolean | no       | false      | Always place the state on a new line below the name                                                                 |
+| `card_layout`              | string  | no       | center     | Layout mode: `center` (alternating), `left` (timeline left, cards right), `right` (timeline right, cards left)      |
+| `compact_layout`           | boolean | no       | false      | Overlaps alternating rows to reduce vertical height (only with `card_layout: center`)                               |
+| `card_background`          | string  | no       | -          | Card background color (supports hex/rgb/rgba)                                                                       |
+| `name_color`               | string  | no       | -          | Global name color (overridden by entity)                                                                            |
+| `state_color`              | string  | no       | -          | Global state color (overridden by entity)                                                                           |
+| `timeline_color_start`     | string  | no       | -          | Timeline gradient start color (hex/rgb/rgba)                                                                        |
+| `timeline_color_end`       | string  | no       | -          | Timeline gradient end color (hex/rgb/rgba)                                                                          |
+| `dot_color`                | string  | no       | -          | Timeline dot color (hex/rgb/rgba)                                                                                   |
+| `collapse_duplicates`      | boolean | no       | false      | Removes consecutive events with the same state across all entities.                                                 |
+| `collapse_duplicates_keep` | string  | no       | `earliest` | Which event to keep when collapsing duplicates: `earliest` (start of the run) or `latest` (end of the run).         |
 
 ```yaml
 type: custom:timeline-card
@@ -278,21 +278,21 @@ entities:
 
 ### Entity Options
 
-| Option                | Type    | Description                                                                                     |
-| --------------------- | ------- | ----------------------------------------------------------------------------------------------- |
-| `name`                | string  | Display name override                                                                           |
-| `icon`                | string  | Static icon                                                                                     |
-| `icon_map`            | object  | State -> icon mapping                                                                           |
-| `icon_color`          | string  | Static icon color                                                                               |
-| `icon_color_map`      | object  | State -> color mapping                                                                          |
-| `state_map`           | object  | State -> label override                                                                         |
-| `include_states`      | list    | Only include events with these raw states                                                       |
-| `exclude_states`      | list    | Hide events with these raw states (alternative to `include_states`)                             |
-| `show_entity_picture` | boolean | Show the entity picture instead of the icon when available                                      |
-| `name_color`          | string  | Name color override (fallback: card -> theme)                                                   |
-| `state_color`         | string  | State color override (fallback: card -> theme)                                                  |
-| `collapse_duplicates` | boolean | Removes consecutive events with the same state for this entity only (overrides global setting). |
-| `collapse_duplicates_keep` | string | Which event to keep when collapsing: `earliest` or `latest` (overrides global setting). |
+| Option                     | Type    | Description                                                                                     |
+| -------------------------- | ------- | ----------------------------------------------------------------------------------------------- |
+| `name`                     | string  | Display name override                                                                           |
+| `icon`                     | string  | Static icon                                                                                     |
+| `icon_map`                 | object  | State -> icon mapping                                                                           |
+| `icon_color`               | string  | Static icon color                                                                               |
+| `icon_color_map`           | object  | State -> color mapping                                                                          |
+| `state_map`                | object  | State -> label override                                                                         |
+| `include_states`           | list    | Only include events with these raw states                                                       |
+| `exclude_states`           | list    | Hide events with these raw states (alternative to `include_states`)                             |
+| `show_entity_picture`      | boolean | Show the entity picture instead of the icon when available                                      |
+| `name_color`               | string  | Name color override (fallback: card -> theme)                                                   |
+| `state_color`              | string  | State color override (fallback: card -> theme)                                                  |
+| `collapse_duplicates`      | boolean | Removes consecutive events with the same state for this entity only (overrides global setting). |
+| `collapse_duplicates_keep` | string  | Which event to keep when collapsing: `earliest` or `latest` (overrides global setting).         |
 
 ---
 
