@@ -483,17 +483,6 @@ class TimelineCardGeneralSettings extends LitElement {
     `;
   }
 
-  _onSelectChange(key, value) {
-    const patch = { [key]: value };
-    this.dispatchEvent(
-      new CustomEvent('settings-changed', {
-        detail: { patch },
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
   _onToggle(key, ev) {
     const patch = { [key]: ev.target.checked };
     this.dispatchEvent(
