@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.10.0
+
+- Added Polish translations by **@Bagerian**, Thank you!
+
 ## v1.9.0
 
 - Added Czech translations by **@trigger737**, Thank you!

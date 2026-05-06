@@ -31,6 +31,7 @@ const translations = {
   'en-us': enUS,
   fr,
   it,
+  pl,
   'pt-br': ptBR,
   ru,
   sv,
