@@ -3,6 +3,7 @@
 ## v1.10.0
 
 - Added Polish translations by **@Bagerian**, Thank you!
+- Added `collapse_duplicates_keep` option (`earliest` / `latest`) to control which event is kept when collapsing duplicate states — configurable globally and per entity
 
 ## v1.9.0
 

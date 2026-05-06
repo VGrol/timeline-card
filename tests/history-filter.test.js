@@ -82,17 +82,75 @@ describe('filterHistory', () => {
       { id: 'sensor.x', raw_state: 'ON', time: 1000 }, // Oldest
     ];
 
-    // filterHistory sorts by time (oldest first) internally before collapsing
-    // So it processes 1000, 2000, 3000.
-    // 1000 -> Keep (first ON)
-    // 2000 -> Skip
-    // 3000 -> Skip
-    // Then it reverses back to newest first for display.
-    // Result should be [ { time: 1000 } ]
-
     const result = filterHistory(items, entities, 100, {});
 
     expect(result).toHaveLength(1);
     expect(result[0].time).toBe(1000);
+  });
+
+  it('should keep the latest event when collapse_duplicates_keep is "latest"', () => {
+    const entities = [{ entity: 'sensor.x', collapse_duplicates: true }];
+    const items = [
+      { id: 'sensor.x', raw_state: 'ON', time: 3000 }, // Newest
+      { id: 'sensor.x', raw_state: 'ON', time: 2000 },
+      { id: 'sensor.x', raw_state: 'ON', time: 1000 }, // Oldest
+    ];
+
+    const result = filterHistory(items, entities, 100, {
+      collapse_duplicates_keep: 'latest',
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0].time).toBe(3000);
+  });
+
+  it('should keep latest per run when states alternate with collapse_duplicates_keep latest', () => {
+    const entities = [{ entity: 'sensor.x', collapse_duplicates: true }];
+    const items = [
+      { id: 'sensor.x', raw_state: 'ON', time: 100 },
+      { id: 'sensor.x', raw_state: 'ON', time: 150 },
+      { id: 'sensor.x', raw_state: 'OFF', time: 200 },
+      { id: 'sensor.x', raw_state: 'OFF', time: 250 },
+      { id: 'sensor.x', raw_state: 'ON', time: 300 },
+      { id: 'sensor.x', raw_state: 'ON', time: 400 },
+    ];
+
+    const result = filterHistory(items, entities, 100, {
+      collapse_duplicates_keep: 'latest',
+    });
+
+    // Expected: latest per run → t=150 (ON), t=250 (OFF), t=400 (ON)
+    // Display order: newest first → [t=400, t=250, t=150]
+    expect(result).toHaveLength(3);
+    expect(result[0].time).toBe(400);
+    expect(result[1].time).toBe(250);
+    expect(result[2].time).toBe(150);
+  });
+
+  it('should support per-entity collapse_duplicates_keep override', () => {
+    const entities = [
+      {
+        entity: 'sensor.a',
+        collapse_duplicates: true,
+        collapse_duplicates_keep: 'latest',
+      },
+      { entity: 'sensor.b', collapse_duplicates: true },
+    ];
+    const items = [
+      { id: 'sensor.a', raw_state: 'ON', time: 100 },
+      { id: 'sensor.a', raw_state: 'ON', time: 200 }, // latest for A
+      { id: 'sensor.b', raw_state: 'RED', time: 300 }, // earliest for B
+      { id: 'sensor.b', raw_state: 'RED', time: 400 },
+    ];
+
+    const result = filterHistory(items, entities, 100, {});
+
+    // A: keep latest ON → t=200; B: keep earliest RED → t=300
+    expect(result).toHaveLength(2);
+    const times = result.map((i) => i.time);
+    expect(times).toContain(200);
+    expect(times).toContain(300);
+    expect(times).not.toContain(100);
+    expect(times).not.toContain(400);
   });
 });

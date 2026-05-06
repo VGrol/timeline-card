@@ -4,6 +4,7 @@
 function collapseDuplicates(list, entities, globalConfig) {
   const collapsed = [];
   const lastStates = {};
+  const latestCandidates = {};
 
   for (const item of list) {
     const cfg = entities.find((e) => e.entity === item.id) || {};
@@ -17,13 +18,39 @@ function collapseDuplicates(list, entities, globalConfig) {
       continue;
     }
 
-    // Check against the last seen state *for this specific entity*
+    const keepMode =
+      cfg.collapse_duplicates_keep ??
+      globalConfig.collapse_duplicates_keep ??
+      'earliest';
+
     const lastState = lastStates[item.id];
-    if (item.raw_state !== lastState) {
-      collapsed.push(item);
-      lastStates[item.id] = item.raw_state;
+
+    if (keepMode === 'latest') {
+      if (item.raw_state !== lastState) {
+        // State changed: flush the previous run's latest candidate
+        if (latestCandidates[item.id] !== undefined) {
+          collapsed.push(latestCandidates[item.id]);
+        }
+        lastStates[item.id] = item.raw_state;
+      }
+      // Always track the most recent item as the candidate for this run
+      latestCandidates[item.id] = item;
+    } else {
+      // 'earliest' mode: keep the first item in each consecutive run
+      if (item.raw_state !== lastState) {
+        collapsed.push(item);
+        lastStates[item.id] = item.raw_state;
+      }
     }
   }
+
+  // Flush any remaining 'latest' candidates (last run of each entity)
+  for (const candidate of Object.values(latestCandidates)) {
+    collapsed.push(candidate);
+  }
+
+  // Re-sort after inserting flushed candidates (they may be out of order)
+  collapsed.sort((a, b) => a.time - b.time);
 
   return collapsed;
 }

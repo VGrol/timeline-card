@@ -357,6 +357,18 @@ class TimelineCardGeneralSettings extends LitElement {
                 'collapse_duplicates',
                 cfg.collapse_duplicates ?? false
               )}
+              ${(cfg.collapse_duplicates ?? false)
+                ? this._selectRow(
+                    'Keep event',
+                    'Which event to show when collapsing duplicates.',
+                    'collapse_duplicates_keep',
+                    cfg.collapse_duplicates_keep ?? 'earliest',
+                    [
+                      { value: 'earliest', label: 'Earliest (default)' },
+                      { value: 'latest', label: 'Latest' },
+                    ]
+                  )
+                : ''}
             </div>
           </div>
         </div>
@@ -437,6 +449,49 @@ class TimelineCardGeneralSettings extends LitElement {
         ></ha-switch>
       </div>
     `;
+  }
+
+  _selectRow(title, description, key, value, options) {
+    return html`
+      <div class="tc-setting-row">
+        <div class="tc-setting-label">
+          <div class="tc-setting-title">${title}</div>
+          ${description
+            ? html`<div class="tc-setting-description">${description}</div>`
+            : ''}
+        </div>
+        <select
+          style="
+            background: var(--card-background-color);
+            color: var(--primary-text-color);
+            border: 1px solid var(--divider-color);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 13px;
+          "
+          .value=${value}
+          @change=${(e) => this._onSelectChange(key, e.target.value)}
+        >
+          ${options.map(
+            (opt) =>
+              html`<option value=${opt.value} ?selected=${opt.value === value}>
+                ${opt.label}
+              </option>`
+          )}
+        </select>
+      </div>
+    `;
+  }
+
+  _onSelectChange(key, value) {
+    const patch = { [key]: value };
+    this.dispatchEvent(
+      new CustomEvent('settings-changed', {
+        detail: { patch },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   _onToggle(key, ev) {

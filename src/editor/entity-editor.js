@@ -154,6 +154,18 @@ class TimelineCardEntityEditor extends LitElement {
                 'collapse_duplicates',
                 cfg.collapse_duplicates ?? null
               )}
+              ${cfg.collapse_duplicates === true
+                ? this._selectRow(
+                    'Keep event',
+                    'Which event to show when collapsing duplicates.',
+                    'collapse_duplicates_keep',
+                    cfg.collapse_duplicates_keep ?? 'earliest',
+                    [
+                      { value: 'earliest', label: 'Earliest (default)' },
+                      { value: 'latest', label: 'Latest' },
+                    ]
+                  )
+                : ''}
 
               <!-- INCLUDE STATES (YAML ONLY) -->
               <div class="tc-setting-row" style="align-items: flex-start;">
@@ -353,8 +365,44 @@ class TimelineCardEntityEditor extends LitElement {
     `;
   }
 
+  _selectRow(title, description, key, value, options) {
+    return html`
+      <div class="tc-setting-row">
+        <div class="tc-setting-label">
+          <div class="tc-setting-title">${title}</div>
+          ${description
+            ? html`<div class="tc-setting-description">${description}</div>`
+            : ''}
+        </div>
+        <select
+          style="
+            background: var(--card-background-color);
+            color: var(--primary-text-color);
+            border: 1px solid var(--divider-color);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 13px;
+          "
+          .value=${value}
+          @change=${(e) => this._onSelectChange(key, e)}
+        >
+          ${options.map(
+            (opt) =>
+              html`<option value=${opt.value} ?selected=${opt.value === value}>
+                ${opt.label}
+              </option>`
+          )}
+        </select>
+      </div>
+    `;
+  }
+
   _onToggle(key, ev) {
     this._updateField(key, ev.target.checked);
+  }
+
+  _onSelectChange(key, ev) {
+    this._updateField(key, ev.target.value);
   }
 
   /* ------------------------

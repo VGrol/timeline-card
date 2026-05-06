@@ -179,6 +179,7 @@ entities:
 | `timeline_color_end`   | string  | no       | -        | Timeline gradient end color (hex/rgb/rgba)                                                                          |
 | `dot_color`            | string  | no       | -        | Timeline dot color (hex/rgb/rgba)                                                                                   |
 | `collapse_duplicates`  | boolean | no       | false    | Removes consecutive events with the same state across all entities.                                                 |
+| `collapse_duplicates_keep` | string | no  | `earliest` | Which event to keep when collapsing duplicates: `earliest` (start of the run) or `latest` (end of the run).    |
 
 ```yaml
 type: custom:timeline-card
@@ -291,6 +292,7 @@ entities:
 | `name_color`          | string  | Name color override (fallback: card -> theme)                                                   |
 | `state_color`         | string  | State color override (fallback: card -> theme)                                                  |
 | `collapse_duplicates` | boolean | Removes consecutive events with the same state for this entity only (overrides global setting). |
+| `collapse_duplicates_keep` | string | Which event to keep when collapsing: `earliest` or `latest` (overrides global setting). |
 
 ---
 
